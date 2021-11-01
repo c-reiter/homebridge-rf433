@@ -35,7 +35,8 @@ request.debug = true;
     form: {
         "id": this.unitCode.toString(),
         "powerState": this.powerState
-    },
+    }
+  },
     function (error, response, body) {
       if (!error && response.statusCode == 200) {
         callback(error, true);
