@@ -4,8 +4,8 @@
   "description": "Homebridge Plugin for RF 433 MHz Outlets",
   "main": "index.js",
   "engines": {
-    "node": "^6.0.0",
-    "homebridge": "^0.4.0"
+    "node": "^16.0.0",
+    "homebridge": "^1.3.5"
   },
   "dependencies": {
     "async": "^2.1.4",
