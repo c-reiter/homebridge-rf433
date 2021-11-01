@@ -32,7 +32,7 @@ RF433Accessory.prototype.callCmdViaServer = function(powerState, callback) {
 request.debug = true;
   request.post({
     url: "http://localhost:3000/send",
-    form: {
+    json: {
         "id": this.unitCode.toString(),
         "powerState": this.powerState
     }
