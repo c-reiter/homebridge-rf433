@@ -21,20 +21,7 @@ function RF433Accessory(log, config) {
   this.systemCode = config.systemCode || "11111";
   this.unitCode = config.unitCode || "1";
 
-  this.gpioServer = config.gpioServer || { protocol: "http", host: "localhost", port: 8672 }
-
   this.powerState = false;
-
-  var exec = require('child_process').exec;
-  var path = require('path');
-
-  var execPath = path.join(__dirname, "GPIOServer.js");
-  exec(["node", execPath, "port=" + this.gpioServer.port].join(' '), function (error, stdout, stderr) {
-    error = error || stderr;
-    if(error && (error + "").indexOf("EADDRINUSE") < 0) {
-      this.log("Something went wrong: " + error);
-    }
-  }.bind(this));
 
   return this;
 }
@@ -42,17 +29,12 @@ function RF433Accessory(log, config) {
 RF433Accessory.prototype.callCmdViaServer = function(powerState, callback) {
   this.log("setting " + this.systemCode + "." + this.unitCode + " on " + this.pin + " to " + (powerState ? "on" : "off"));
 
-  var url = this.gpioServer.protocol + "://" + this.gpioServer.host + ":" + this.gpioServer.port;
 request.debug = true;
-  request({
-    url,
-    qs: {
-        "execPath": path.join(__dirname, "xkonni-raspberry-remote*/send"),
-        "pin": this.pin,
-        "systemCode": this.systemCode,
-        "unitCode": this.unitCode,
+  request.post({
+    url: "http://localhost:3000/send",
+    form: {
+        "id": this.unitCode.toString(),
         "powerState": this.powerState
-      }
     },
     function (error, response, body) {
       if (!error && response.statusCode == 200) {
