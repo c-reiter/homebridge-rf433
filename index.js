@@ -29,7 +29,7 @@ function RF433Accessory(log, config) {
 RF433Accessory.prototype.callCmdViaServer = function(powerState, callback) {
   this.log("setting " + this.systemCode + "." + this.unitCode + " on " + this.pin + " to " + (powerState ? "on" : "off"));
 
-request.debug = true;
+//request.debug = true;
   request.post({
     url: "http://localhost:3000/send",
     json: {
